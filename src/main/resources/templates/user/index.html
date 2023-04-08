@@ -26,12 +26,45 @@
         color: #fff;
         background-color: #6c757d;
     }
+
+    .promo-section {
+        text-align: center;
+    }
+
+    .promo-section h2 {
+        font-size: 36px;
+    }
+
+    .promo-section p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .btn-comprar {
+        display: inline-block;
+        padding: 16px 32px;
+        font-size: 24px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 50px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn-comprar:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
+    }
 </style>
 
 <!--<nav th:replace="index::nav"></nav>   ----     th:fragment="nav"-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="nav">
     <div class="container">
-        <a class="navbar-brand" href="#" th:href="@{/}">Lista de Usuarios</a>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" class="navbar-brand" href="#" th:href="@{/}">Lista de Usuarios</a>
+        <a sec:authorize="hasRole('ROLE_USER')" class="navbar-brand" href="#" th:href="@{/}">Welcome</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -39,7 +72,8 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link active" aria-current="page" th:href="@{/home}"
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link active" aria-current="page"
+                       th:href="@{/home}"
                     >Productos</a>
                 </li>
                 <li class="nav-item">
@@ -54,17 +88,36 @@
 </nav>
 
 <div class="container">
-    <h1>Registros de usuarios </h1>
+    <h1 sec:authorize="hasRole('ROLE_ADMIN')" style="text-align: center;">Registros de usuarios </h1>
+    <h1 sec:authorize="hasRole('ROLE_USER')" style="text-align: center;" >Tienda Smartphone </h1>
     <br>
-    <h4>
-        Bienvenido: <span sec:authentication="principal.username"></span>
-    </h4>
+    <h3>
+        Bienvenido: <br><span sec:authentication=" principal.username"></span>
+    </h3>
+
 
     <br> <br>
+
+    <h4 class="card-title">
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/exportarPDF}"
+           class="btn btn-secondary">Exportar a PDF</a> <a
+            sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/exportarExcel}"
+            class="btn btn-success">Exportar a Excel</a>
+    </h4>
     <div th:if="${param.success}">
         <div class="alert alert-success">Se ha registrado exitosamente a la aplicación</div>
     </div>
-    <table class="table table-striped table-bordered">
+
+    <br>
+    <div sec:authorize="hasRole('ROLE_USER')" class="promo-section">
+        <h2>Tenemos los mejores productos</h2>
+        <p>Explora nuestra selección de productos de alta calidad y encuentra justo lo que necesitas. Desde tecnología
+            hasta moda, tenemos todo lo que necesitas para hacer tu vida más fácil.</p>
+        <br>
+        <a th:href="@{/catalogo}" class="btn-comprar">¡Ver Productos!</a>
+    </div>
+
+    <table sec:authorize="hasRole('ROLE_ADMIN')" class="table table-striped table-bordered">
         <thead class="table-dark">
         <tr>
             <th>ID</th>
@@ -83,8 +136,6 @@
         </tbody>
     </table>
 </div>
-
-
 
 
 <!-- Latest compiled and minified JavaScript -->

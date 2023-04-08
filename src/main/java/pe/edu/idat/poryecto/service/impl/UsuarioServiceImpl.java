@@ -36,8 +36,26 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario usuarioById(Long id) {
-        Optional<Usuario> optional = usuarioRepository.findById(id);
-        return optional.orElse(null);
+        if (id == null) {
+            throw new IllegalArgumentException("El ID de usuario no puede ser nulo");
+        }
+        return usuarioRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Usuario> findAll() {
+        return usuarioRepository.findAll();
+    }
+
+
+    @Override
+    public Usuario findByUsername(String name) {
+        return usuarioRepository.findByNombre(name);
+    }
+
+    @Override
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
 
 }

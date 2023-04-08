@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,11 +26,27 @@ public class Producto {
     private Integer cantidad;
     private String descripcion;
 
+    @ManyToOne
+    private Usuario usuario;
+
+    @ManyToOne
+    private Compra compras;
+
+
 
     @Transient
     public String getPhotosImagePath() {
         if (fotos == null) return null;
         return "/producto-fotos/" + id + "/" + fotos;
     }
+    public Producto(Long id, String nombre, Double precio, String fotos, Integer cantidad, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.fotos = fotos;
+        this.cantidad = cantidad;
+        this.descripcion = descripcion;
+    }
+
 
 }

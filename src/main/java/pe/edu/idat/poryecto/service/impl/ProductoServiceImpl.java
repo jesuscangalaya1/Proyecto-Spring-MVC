@@ -69,6 +69,11 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
+    public Producto saveProducto(Producto p) {
+        return productoRepository.save(p);
+    }
+
+    @Override
     public Page<Producto> paginacionCatalogo(int pageNo, int pageSize, String sortField, String sortDir, Producto producto) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(sortField).ascending() : Sort.by(sortField).descending();

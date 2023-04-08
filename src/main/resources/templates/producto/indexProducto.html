@@ -90,7 +90,7 @@
             <td><img th:src="${producto.photosImagePath}" class="img-round" alt="No pic" width="100" height="60"/></td>
             <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/showFormForUpdate/{id}(id=${producto.id})}"
                    class="btn btn-primary">Update</a></td>
-            <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/deleteProducto/{id}(id=${producto.id})}"
+                <td><a sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/deleteProducto/{id}(id=${producto.id})}"
                    class="btn btn-danger"
                    onclick="return confirm('¿Estás seguro de que quieres borrar este producto?')">Delete</a></td>
         </tr>

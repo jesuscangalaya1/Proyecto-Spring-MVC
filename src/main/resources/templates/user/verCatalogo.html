@@ -77,29 +77,38 @@
             <div class="row">
                 <div class="col-lg-6">
                     <a href="#"> <img class="img-fluid rounded"
-                                      th:src="${producto.photosImagePath}"   alt="No Pic">
+                                      th:src="${producto.photosImagePath}" alt="No Pic">
                     </a>
                 </div>
                 <div class="col-lg-6">
-                    <form th:action="@{/addCarrito}" method="POST">
-                        <input type="hidden" th:value="${producto.id}" name="id">
-                        <h2 class="card-title" th:text="${producto.nombre}"></h2>
+                    <form th:action="@{/procesar}" method="POST">
+                        <input type="hidden" th:value="${producto.id}" name="idProducto">
 
+                        <h2 class="card-title" th:text="${producto.nombre}"></h2>
                         <ul class="list-group">
                             <li class="list-group-item"><h5 th:text=" 'Precio: '+ ${producto.precio} "></h5></li>
                             <li class="list-group-item">
                                 <p th:text=" 'Descripción: '+ ${producto.descripcion} "></p>
                             </li>
-                            <li class="list-group-item"><h6>
-                                Cantidad: <input type="number" id="cantidad" name="cantidad"
-                                                 autocomplete="off" min="1" max="5" value="1">
-                            </h6></li>
+                            <li class="list-group-item">
+                                <h6>
+                                    Cantidad: <input type="number" id="cantidad" name="cantidad" autocomplete="off"
+                                                     min="1" max="5" value="1" onchange="actualizarTotal()">
+                                    <script>
+                                        function actualizarTotal() {
+                                            const cantidad = document.getElementById("cantidad").value;
+                                            const precio = parseFloat("${producto.precio}");
+                                            const total = cantidad * precio;
+                                            document.getElementById("total").value = total.toFixed(2);
+                                        }
+                                    </script>
+
+                                </h6>
+                            </li>
                         </ul>
-
-
-                        <button type="submit" class="btn btn-dark" >Comprar</button>
-
+                        <button type="submit" class="btn btn-dark">Comprar</button>
                     </form>
+
                 </div>
             </div>
         </div>

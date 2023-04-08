@@ -15,4 +15,7 @@ public interface UsuarioService{
 
     List<Usuario> listarUsuarios();
     Usuario usuarioById(Long id);
+    List<Usuario> findAll();
+    Usuario findByUsername(String name);
+    Usuario findByEmail(String email);
 }

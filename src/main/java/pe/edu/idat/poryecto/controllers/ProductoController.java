@@ -16,6 +16,7 @@ import pe.edu.idat.poryecto.dtos.ProductoDTO;
 import pe.edu.idat.poryecto.persistence.entities.Producto;
 import pe.edu.idat.poryecto.service.ProductoService;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -76,6 +77,7 @@ public class ProductoController {
     }
 
     @GetMapping("/deleteProducto/{id}")
+    @Transactional
     public String deleteProducto(@PathVariable Long id) {
         productoService.deleteProductoById(id);
         return "redirect:/home";

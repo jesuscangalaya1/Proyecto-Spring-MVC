@@ -16,4 +16,6 @@ public interface ProductoService {
     Page<Producto> paginacionCatalogo(int pageNo, int pageSize, String sortField, String sortDir, Producto producto);
 
     Page<Producto> paginacion(int pageNo, int pageSize, String sortField,String sortDir);
+
+    Producto saveProducto(Producto p);
 }
