@@ -9,12 +9,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import pe.edu.idat.poryecto.service.DetailsService;
+import pe.edu.idat.poryecto.service.impl.DetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -24,9 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    private DetailsService usuarioServicio;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private DetailsServiceImpl usuarioServicio;
+
+ /*   @Autowired
+    private BCryptPasswordEncoder passwordEncoder;*/
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

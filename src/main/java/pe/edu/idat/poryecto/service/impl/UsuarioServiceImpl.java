@@ -2,6 +2,9 @@ package pe.edu.idat.poryecto.service.impl;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.idat.poryecto.dtos.UsuarioDTO;
@@ -29,11 +32,9 @@ public class UsuarioServiceImpl implements UsuarioService {
                 passwordEncoder.encode(registroDTO.getPassword()), Arrays.asList(new Rol("ROLE_USER")));
         return usuarioRepository.save(usuario);
     }
-    @Override
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
     }
-
     @Override
     public Usuario usuarioById(Long id) {
         if (id == null) {
@@ -46,7 +47,6 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
-
 
     @Override
     public Usuario findByUsername(String name) {
