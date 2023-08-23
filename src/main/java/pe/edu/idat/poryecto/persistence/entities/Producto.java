@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
+@Table(name = "producto")
+@Where(clause = "deleted = false")
+@SQLDelete(sql = "UPDATE producto SET deleted = true WHERE id=?")
 public class Producto {
 
     @Id
@@ -25,6 +30,9 @@ public class Producto {
     private String fotos;
     private Integer cantidad;
     private String descripcion;
+
+    @Column(columnDefinition = "BOOLEAN NOT NULL DEFAULT '0'")
+    private boolean deleted;
 
     @ManyToOne
     private Usuario usuario;

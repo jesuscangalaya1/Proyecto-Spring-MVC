@@ -65,7 +65,7 @@ public class ProductoServiceImpl implements ProductoService {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
                 Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo -1, pageSize, sort);
-        return productoRepository.findAll(pageable);
+        return productoRepository.findAllByDeletedFalse(pageable);
     }
 
     @Override

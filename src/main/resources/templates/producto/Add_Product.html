@@ -1,10 +1,11 @@
+<!--
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>sistema de gestión de empleados</title>
+    <title>sistema de Pasteleria</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
@@ -19,7 +20,7 @@
 <body>
 <div align="center">
     <br/>
-    <h1>Nuevo Student</h1>
+    <h1>Crear Nuevo Pastel</h1>
     <br/>
 
     <form action="#" th:action="@{/saveProducto}" th:object="${producto}"
@@ -31,7 +32,7 @@
         <table border="0" cellpadding="10">
 
             <tr>
-                <td>Nombre Del Producto:</td>
+                <td>Nombre Del Pastel:</td>
                 <td><input type="text" th:field="*{nombre}" required autofocus="autofocus" placeholder="Nombre del Producto" title="Por favor, ingrese el nombre."/></td>
                 <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error-message"></span>
             </tr>
@@ -63,6 +64,132 @@
         </table>
     </form>
     <a th:href="@{/home}">Back to Products</a>
+</div>
+</body>
+</html>-->
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Pastelería</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js"
+            integrity="sha384-heAjqF+bCxXpCWLa6Zhcp4fu20XoNIA98ecBC1YkdXhszjoejr5y9Q77hIrv8R9i"
+            crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .alert-success {
+            margin-top: 20px;
+        }
+
+        form {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .error-message {
+            color: #dc3545;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div align="center">
+        <br/>
+        <h1>Crear Nuevo Pastel</h1>
+        <br/>
+
+        <form action="#" th:action="@{/saveProducto}" th:object="${producto}"
+              method="post" enctype="multipart/form-data">
+            <div th:if="${param.success}">
+                <div class="alert alert-success">Se ha registrado exitosamente el producto</div>
+            </div>
+
+            <table border="0" cellpadding="10">
+
+                <tr>
+                    <td>Nombre Del Pastel:</td>
+                    <td><input type="text" th:field="*{nombre}" required autofocus="autofocus" placeholder="Nombre del Producto" title="Por favor, ingrese el nombre."/></td>
+                    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error-message"></span>
+                </tr>
+                <tr>
+                    <td>Precio:</td>
+                    <td><input type="text" th:field="*{precio}" required autofocus="autofocus" placeholder="Precio" title="Por favor, ingrese el precio."/></td>
+                    <span th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}" class="error"></span>
+                </tr>
+                <tr>
+                    <td>Foto:</td>
+                    <td><input type="file" name="image" accept="image/png, image/jpeg"/></td>
+                </tr>
+                <tr>
+                    <td>Cantidad:</td>
+                    <td><input type="text" th:field="*{cantidad}" required autofocus="autofocus" placeholder="Cantidad" title="Por favor, ingrese la cantidad del producto."/></td>
+                    <span th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}" class="error"></span>
+                </tr>
+                <tr>
+                    <td>Descripcion:</td>
+                    <td><input type="text" th:field="*{descripcion}" required autofocus="autofocus" placeholder="Descripcion" /></td>
+                    <span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="error"></span>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+        <a th:href="@{/home}" class="btn btn-secondary">Volver a la Lista de Pasteles</a>
+    </div>
 </div>
 </body>
 </html>
