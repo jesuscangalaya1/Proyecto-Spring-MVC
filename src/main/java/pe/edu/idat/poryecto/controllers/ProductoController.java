@@ -15,11 +15,13 @@ import pe.edu.idat.poryecto.config.FileUploadUtil;
 import pe.edu.idat.poryecto.dtos.ProductoDTO;
 import pe.edu.idat.poryecto.persistence.entities.Producto;
 import pe.edu.idat.poryecto.service.ProductoService;
+import pe.edu.idat.poryecto.service.impl.CloudinaryService;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -27,6 +29,7 @@ import java.util.List;
 public class ProductoController {
 
     private final ProductoService productoService;
+    private final CloudinaryService cloudinaryService;
 
 
     @GetMapping("/home")
@@ -59,12 +62,33 @@ public class ProductoController {
         if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El nombre del producto no puede estar vacío.");
         }
+        // Convertir ProductoDTO a Producto
+        Producto mapProducto = Producto.builder()
+                .nombre(producto.getNombre())
+                .precio(producto.getPrecio())
+                .cantidad(producto.getCantidad())
+                .descripcion(producto.getDescripcion())
+                .build();
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         producto.setFotos(fileName);
+
+        // Guardar el producto y obtener la entidad guardada
+        Producto savedProduct = productoService.saveProducto(mapProducto);
+
+        // Subir la imagen a Cloudinary y obtener la URL
+        Map uploadResult = cloudinaryService.upload(multipartFile);
+        String imageUrl = (String) uploadResult.get("url");
+        savedProduct.setFotos(imageUrl);
+
+        // Actualizar el producto con la URL de la imagen y guardarlo nuevamente
+        productoService.saveProducto(savedProduct);
+
+       /* String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        producto.setFotos(fileName);
         Producto saveProduct = productoService.guardarProducto(producto);
         String upload = "producto-fotos/" + saveProduct.getId();
-        FileUploadUtil.saveFile(upload, fileName, multipartFile);
+        FileUploadUtil.saveFile(upload, fileName, multipartFile);*/
         return new RedirectView("/home", true);
     }
 
